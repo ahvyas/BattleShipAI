@@ -1,11 +1,17 @@
-from . import move, player
+from . import move, player, RandomAI
 import random
 
-class SearchDestroyAI(object):
+
+class SearchDestroyAI(RandomAI.RandomAI):
+    @classmethod
+    def random_gen(cls, maker):
+        r, c = maker.opponents[0].destroy[0]
+        return r, c
+
     @classmethod
     def get_move(cls, maker):
         try:
-            r, c = maker.opponents[0].destroy[0]
+            r, c = SearchDestroyAI.random_gen(maker)
             del maker.opponents[0].destroy[0]
             if (r, c) in maker.possible_locations:
                 maker.possible_locations.remove((r, c))
